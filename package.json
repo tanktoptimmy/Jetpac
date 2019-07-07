@@ -1,0 +1,16 @@
+{
+  "name": "jetpac",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@bitbucket.org:timparry/jetpac.git",
+  "author": "Timothy Parry <timparry2005@hotmail.co.uk>",
+  "license": "MIT",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.17.1"
+  },
+  "engines": {
+    "node": ">= 10.15.3"
+  },
+  "bundleDependencies": []
+}

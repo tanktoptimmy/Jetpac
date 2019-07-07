@@ -8,7 +8,7 @@ function Alien(img, x, y,alienObject,level,maxX) {
     if(r == 1){
         this.velY = this.velY *-1;
     }
-    
+
     this.maxX = maxX;//screen width
 	this.width = alienObject.width;
 	this.height = alienObject.height;
@@ -29,9 +29,7 @@ function Alien(img, x, y,alienObject,level,maxX) {
     }
 
     this.posY = alienObject.y;
-   
 	this.connectedEdge = null;
-    
     this.enabled = true;
 }
 
@@ -39,17 +37,17 @@ function Alien(img, x, y,alienObject,level,maxX) {
     Alien.prototype.update = function (){
         this.pos.plusEq(this.vel);
     };
-    
+
     Alien.prototype.render = function(c){
         if(this.enabled){
             c.drawImage(this.img,this.posX,this.posY,this.width,this.height,this.pos.x,this.pos.y,this.width,this.height);
         }
     };
-    
+
     Alien.prototype.getLeft = function() {
         return this.pos.x;
     };
-    
+
     Alien.prototype.getRight = function() {
         return this.pos.x+this.width;
     };
@@ -57,15 +55,15 @@ function Alien(img, x, y,alienObject,level,maxX) {
     Alien.prototype.getTop = function() {
         return this.pos.y;
     };
-    
+
     Alien.prototype.getBottom = function () {
         return this.pos.y + this.height;
     };
-    
+
     Alien.prototype.getHeight = function (){
         return this.height;
     };
-    
+
     Alien.prototype.getWidth = function (){
         return this.width;
     };
@@ -73,11 +71,11 @@ function Alien(img, x, y,alienObject,level,maxX) {
     Alien.prototype.getY = function(){
         return this.pos.y;
     };
-    
+
     Alien.prototype.getEnabled = function(){
         return this.enabled;
     };
-    
+
     Alien.prototype.setEnabled = function(enabled){
         this.enabled = enabled;
         if(this.enabled){
@@ -93,38 +91,35 @@ function Alien(img, x, y,alienObject,level,maxX) {
             this.vel.y = this.vel.x = 0;
         }
     };
-    
+
     Alien.prototype.setMotion = function(y){
         this.pos = new Vector2(this.pos.x,y);
     };
-    
+
     Alien.prototype.getBounce = function(){
         return this.bounce;
     };
-    
+
     Alien.prototype.changeDirection = function( yInvert, xInvert){
-        if(yInvert){
-            this.vel.y *= -1;
+      if(yInvert){
+        this.vel.y *= -1;
+      }
+      if(xInvert) {
+        this.vel.x *= -1;
+        this.vel.y *= -1;
+        if(this.direction == 'pos'){
+          this.direction = 'neg';
+          this.posX = this.goingLeftPosX;
+        } else {
+          this.direction = 'pos';
+          this.posX = this.goingRightPosX;
         }
-        if(xInvert) {
-            this.vel.x *= -1;
-            this.vel.y *= -1;
-            if(this.direction == 'pos'){
-                this.direction = 'neg';
-                this.posX = this.goingLeftPosX;
-                
-            }else{
-                this.direction = 'pos';
-                this.posX = this.goingRightPosX;
-            }
-        }
-        
+      }
     };
-    
+
     Alien.prototype.getDirection = function(){
         return this.direction;
     };
-
 
     Alien.prototype.setRandomDirection = function(){
         var n = random(0,1);
@@ -138,7 +133,6 @@ function Alien(img, x, y,alienObject,level,maxX) {
                 this.direction = 'pos';
                 this.pos.x = 0;
             }
-            
     };
 
 //get random numbers between min & max

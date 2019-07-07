@@ -1,7 +1,4 @@
 function Highscore(){
-	
-	
-	
 
 	this.ajaxRequest;  // The variable that makes Ajax possible!
 	
@@ -22,11 +19,6 @@ function Highscore(){
 			}
 		}
 	}
-
-	
-	
-	
-
 }
 
 Highscore.prototype.proxy = function(func){
@@ -85,5 +77,3 @@ Highscore.prototype.setScores = function(e){
 	  }
 
 }
-
-

@@ -1,7 +1,6 @@
 Particle = function(x, y) {
 	//@TODO reuse setup of bullet
-	var speed = 0.5;
-    var count = 0;
+    var speed = 0.5;
     
     //moving the bullet to the end of the ship (14 high)
     this.vel = new Vector2(0,0);
@@ -9,9 +8,7 @@ Particle = function(x, y) {
     this.vel.x = -speed;
 	this.update = function() {
         this.pos.plusEq(this.vel);
-        
 	};
-	
 	this.render = function(c) {
         c.fillStyle = "rgba(150,255,0,0.5)";
 		c.beginPath();

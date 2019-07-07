@@ -16,14 +16,14 @@ window.addEventListener('load', eventWindowLoaded,false);
             }
             
             function canvasApp(){
-                
+
                 const HIGH_SCORES = 'high_scores';
                 const GAME_END = 'game_end';
                 const GAME_START = 'game_start';
                 const GAME_PLAY = 'game_play';
                 const GAME_LOADING = "game_loading";
                 const GAME_NEXT_LEVEL = "game_next_level";
-                const APP_STATE;
+                let APP_STATE = null;
                 const IN_PLAY_BUILDING_ROCKET = "building_rocket";
                 const IN_PLAY_REFUELING = "refuelling";
                 const IN_PLAY_REFUELLED = "refuelled";
@@ -96,21 +96,20 @@ window.addEventListener('load', eventWindowLoaded,false);
                 spareBullets = [],
                 //edges
                 edges = [],
-                edgeLevels,edgedToDraw,
+                edgeLevels, edgedToDraw,
                 edgeImg,
                 //keys down
                 leftDown,rightDown,upDown,
                 aliens = [],
                 spareAliens = [],
 
-                highScore = new Highscore(),                
-                highScores = [],
+                // highScore = new Highscore(),
+                // highScores = [],
                 showingCongratsPrompt = false;;
 
                 gameStateInit();
 
 
-                
                 function gameStateInit(){
 
                     // Setup canvas and expose context via ctx variable
@@ -221,12 +220,9 @@ window.addEventListener('load', eventWindowLoaded,false);
 
                 }
 
-
                 function itemLoaded(event){
-               
                     loadCount++;
                     if(loadCount == itemsToLoad){
-                       
                         shootSound.removeEventListener('canplaythrough',itemLoaded,false);  
                         shootSound2.removeEventListener('canplaythrough',itemLoaded,false);   
                         shootSound3.removeEventListener('canplaythrough',itemLoaded,false);  
@@ -244,10 +240,8 @@ window.addEventListener('load', eventWindowLoaded,false);
                         soundPool.push({name: 'shoot1', element:shootSound2, played: false});
                         soundPool.push({name: 'shoot1', element:shootSound3, played: false});
                         soundPool.push({name: 'sonicboom', element:sonicboomSound, played: false});
-                        
                         soundPool.push({name: 'fuelled', element:fuelledSound, played: false});
-                        
-                       
+
                         init();
 
                     }
@@ -307,14 +301,14 @@ window.addEventListener('load', eventWindowLoaded,false);
                 function initListeners() {
                     document.addEventListener( 'keydown', onKeyDown, false );
                     document.addEventListener( 'keyup', onKeyUp, false );
-                    document.addEventListener('setHighScores', function(e){                        
-                        var n = e.scores.split('|');
-                        highScores = [];
-                        for (var i = 0; i<n.length-1; i++){                            
-                            highScores.push({"name":n[i],"score":zeroFix(n[i+1])})
-                            i++
-                        }                        
-                    }, false);
+                    // document.addEventListener('setHighScores', function(e){                        
+                    //     var n = e.scores.split('|');
+                    //     highScores = [];
+                    //     for (var i = 0; i<n.length-1; i++){                            
+                    //         highScores.push({"name":n[i],"score":zeroFix(n[i+1])})
+                    //         i++
+                    //     }                        
+                    // }, false);
                     canvas.addEventListener('touchmove', function(event) {
                         for (var i = 0; i < event.touches.length; i++) {
                         var touch = event.touches[i];
@@ -339,9 +333,9 @@ window.addEventListener('load', eventWindowLoaded,false);
                         player.setDirection('right'); 
                         rightDown = true;
 
-                    }else if (e.keyCode == 38) {					
+                    }else if (e.keyCode == 38) {
                         upDown = true;
-                    }else if(e.keyCode == 32){                    
+                    }else if(e.keyCode == 32) {
                         if(game_state == GAME_PLAY){
                             //only create new bullet if player is enabled
                             if(player.getEnabled()){
@@ -353,12 +347,10 @@ window.addEventListener('load', eventWindowLoaded,false);
                                 } else {
                                     bullet = new Bullet(player.pos.x, player.pos.y, player.getDirection());
                                     bullets.push(bullet);				
-                                } 
-                             
+                                }
                                 playSound(SOUND_SHOOT,0.5)
                             }
                         }else if(game_state == GAME_START||game_state == HIGH_SCORES){
-                            //clearAllGameVariables();
                             resetGameElements();
                             in_play = IN_PLAY_BUILDING_ROCKET;                                 
                             setUpAliens();                                                
@@ -370,8 +362,8 @@ window.addEventListener('load', eventWindowLoaded,false);
                     }else if(e.keyCode == 13){
                         if(game_state == GAME_START){
                             //go to high scores
-                            game_state = HIGH_SCORES;
-                            highScore.getScores();                            
+                            // game_state = HIGH_SCORES;
+                            // highScore.getScores();                            
                         }else if(game_state == HIGH_SCORES){
                             game_state = GAME_START;
                         }
@@ -387,7 +379,6 @@ window.addEventListener('load', eventWindowLoaded,false);
 
 
                  function gameLoop(){
-                                      
                     ctx.fillStyle='rgba(0,0,0,1)';
                     ctx.fillRect(0,0,SCREEN_WIDTH,SCREEN_HEIGHT)                                       
                     for(var i = 0; i<particles.length; i++){                    
@@ -408,12 +399,11 @@ window.addEventListener('load', eventWindowLoaded,false);
                         createEndScreen();
                     }else if(game_state == HIGH_SCORES){
                         ctx.textAlign = 'center';
-                        createHighScores();
+                        createTitleScreen()
+                        // createHighScores();
                     }
 
                 }
-
-                
 
                 function checkCollisions(){
                     if(player.connectedEdge){
@@ -422,7 +412,6 @@ window.addEventListener('load', eventWindowLoaded,false);
                             player.fall();
 
                     }
-                                
                     //edged collisions
                     var edleng = edges[edgesToDraw].length;
                     for (var i = 0; i < edleng; i++){
@@ -634,7 +623,6 @@ window.addEventListener('load', eventWindowLoaded,false);
                                     score += 200;                                                                                                      
                                 }
                             }
-                        
                     }
                 }
 
@@ -659,7 +647,6 @@ window.addEventListener('load', eventWindowLoaded,false);
 
 
                 function setUpGameElements(){                                    
-                        
                         player = null;
                         spaceship = null;
                         shipParts = [];
@@ -723,31 +710,31 @@ window.addEventListener('load', eventWindowLoaded,false);
                 }
 
 
-                function createHighScores(){
+                // function createHighScores(){
                     
-                    var x = canvas.width/2;
+                //     var x = canvas.width/2;
                     
-                    ctx.font = '40px Orbitron';
-                    ctx.fillStyle = '#ffffff';                
-                    ctx.fillText('High Scores',x,150);
-                    ctx.strokeStyle   = "blue";
-                    ctx.strokeText('High Scores', x,150);
-                    ctx.font = '20px Orbitron';
-                    ctx.textAlign = 'left';
+                //     ctx.font = '40px Orbitron';
+                //     ctx.fillStyle = '#ffffff';                
+                //     ctx.fillText('High Scores',x,150);
+                //     ctx.strokeStyle   = "blue";
+                //     ctx.strokeText('High Scores', x,150);
+                //     ctx.font = '20px Orbitron';
+                //     ctx.textAlign = 'left';
                     
-                    if( highScores.length != 0 ) {
-                        for(var i = 0; i < highScores.length; i++){
+                //     if( highScores.length != 0 ) {
+                //         for(var i = 0; i < highScores.length; i++){
                             
-                            ctx.fillText(highScores[i].name ,170,185 + (i*25))                            
-                            ctx.fillText(highScores[i].score ,350,185 + (i*25))
-                        }
-                    }
+                //             ctx.fillText(highScores[i].name ,170,185 + (i*25))                            
+                //             ctx.fillText(highScores[i].score ,350,185 + (i*25))
+                //         }
+                //     }
 
-                    ctx.textAlign = 'center';
-                    ctx.fillText('Hit space to play', x,430)
-                    ctx.fillText('or Return to go to the home page', x,460)
+                //     ctx.textAlign = 'center';
+                //     ctx.fillText('Hit space to play', x,430)
+                //     ctx.fillText('or Return to go to the home page', x,460)
                     
-                }
+                // }
 
                 function zeroFix(score){
                     if(score.length < 10){
@@ -765,7 +752,7 @@ window.addEventListener('load', eventWindowLoaded,false);
                     var x = canvas.width/2;
               
                     if(score == 0){
-                        highScore.getScores();
+                        // highScore.getScores();
                         game_state = HIGH_SCORES;
                     }else{
                         if(showingCongratsPrompt == false){
@@ -773,13 +760,13 @@ window.addEventListener('load', eventWindowLoaded,false);
                             showingCongratsPrompt = true;
 
                             if(fName!=null){
-                                highScore.sendScore(fName,score);
-                                setTimeout(function(){
-                                    highScore.getScores();
-                                    game_state = HIGH_SCORES;
-                                },1000)
+                                // highScore.sendScore(fName,score);
+                                // setTimeout(function(){
+                                //     highScore.getScores();
+                                //     game_state = HIGH_SCORES;
+                                // },1000)
                             }else{
-                                highScore.getScores();
+                                // highScore.getScores();
                                 game_state = HIGH_SCORES;
                             }
                                
