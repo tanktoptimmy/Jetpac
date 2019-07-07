@@ -1,7 +1,7 @@
 {
   "name": "jetpac",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "git@bitbucket.org:timparry/jetpac.git",
   "author": "Timothy Parry <timparry2005@hotmail.co.uk>",
   "license": "MIT",
