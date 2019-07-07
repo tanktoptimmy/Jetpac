@@ -688,12 +688,10 @@ window.addEventListener('load', eventWindowLoaded,false);
                     numberOfAliens = 0;                    
                     maxNumberOfAliens = maxNumberOfAliens + level;
                     bonus.setEnabled(false);
-                                  
                 }
 
                 function createTitleScreen(){
                     var x = canvas.width/2;
-                    
                     ctx.font = '40px Orbitron';
                     ctx.fillStyle = '#ffffff';                
                     ctx.fillText('Welcome to Jetpac{ish}',x,220);
@@ -704,28 +702,23 @@ window.addEventListener('load', eventWindowLoaded,false);
                     // ctx.fillText('or Return to view high scores', x,380)
 
                     ctx.font = '15px Orbitron';
-                    
                     ctx.fillText('Use the arrow keys to go left and right and thrust',x,260);
                     ctx.fillText('Space bar fires bullets',x,290);
                 }
 
 
                 // function createHighScores(){
-                    
                 //     var x = canvas.width/2;
-                    
                 //     ctx.font = '40px Orbitron';
-                //     ctx.fillStyle = '#ffffff';                
+                //     ctx.fillStyle = '#ffffff';
                 //     ctx.fillText('High Scores',x,150);
                 //     ctx.strokeStyle   = "blue";
                 //     ctx.strokeText('High Scores', x,150);
                 //     ctx.font = '20px Orbitron';
                 //     ctx.textAlign = 'left';
-                    
                 //     if( highScores.length != 0 ) {
                 //         for(var i = 0; i < highScores.length; i++){
-                            
-                //             ctx.fillText(highScores[i].name ,170,185 + (i*25))                            
+                //             ctx.fillText(highScores[i].name ,170,185 + (i*25))
                 //             ctx.fillText(highScores[i].score ,350,185 + (i*25))
                 //         }
                 //     }
@@ -733,7 +726,6 @@ window.addEventListener('load', eventWindowLoaded,false);
                 //     ctx.textAlign = 'center';
                 //     ctx.fillText('Hit space to play', x,430)
                 //     ctx.fillText('or Return to go to the home page', x,460)
-                    
                 // }
 
                 function zeroFix(score){
@@ -750,8 +742,7 @@ window.addEventListener('load', eventWindowLoaded,false);
                 function createEndScreen(){
 
                     var x = canvas.width/2;
-              
-                    if(score == 0){
+                    if (score == 0){
                         // highScore.getScores();
                         game_state = HIGH_SCORES;
                     }else{
