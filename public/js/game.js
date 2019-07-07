@@ -701,7 +701,7 @@ window.addEventListener('load', eventWindowLoaded,false);
                     ctx.strokeText('Welcome to Jetpac{ish}', x,220);
                     ctx.font = '20px Orbitron';
                     ctx.fillText('Hit space to play', x,350)
-                    ctx.fillText('or Return to view high scores', x,380)
+                    // ctx.fillText('or Return to view high scores', x,380)
 
                     ctx.font = '15px Orbitron';
                     
