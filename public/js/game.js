@@ -191,31 +191,31 @@ window.addEventListener('load', eventWindowLoaded,false);
 
              
                     playerImg = new Image();  
-                    playerImg.src = '../images/player.png';                
+                    playerImg.src = './images/player.png';                
                     playerImg.onload = itemLoaded;
 
                     bonusImg = new Image();  
-                    bonusImg.src = '../images/bonuses.png';                
+                    bonusImg.src = './images/bonuses.png';                
                     bonusImg.onload = itemLoaded;
 
                     spaceshipImg = new Image();
-                    spaceshipImg.src = '../images/spaceship.png';
+                    spaceshipImg.src = './images/spaceship.png';
                     spaceshipImg.onload = itemLoaded;
 
                     fuelImg = new Image();
-                    fuelImg.src = '../images/fuel.png';
+                    fuelImg.src = './images/fuel.png';
                     fuelImg.onload = itemLoaded;
 
                     alienImg = new Image();
-                    alienImg.src = '../images/alien.png';
+                    alienImg.src = './images/alien.png';
                     alienImg.onload = itemLoaded;
 
                     explosionImg = new Image();
-                    explosionImg.src = '../images/explosion.png';
+                    explosionImg.src = './images/explosion.png';
                     explosionImg.onload = itemLoaded;
 
                     edgeImg = new Image();
-                    edgeImg.src = '../images/platform.png';
+                    edgeImg.src = './images/platform.png';
                     edgeImg.onload = itemLoaded;
 
                 }
