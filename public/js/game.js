@@ -121,63 +121,63 @@ window.addEventListener('load', eventWindowLoaded,false);
                     explodeSound = document.createElement('audio');
                     document.body.appendChild(explodeSound);
                     audioType = supportedAudioFormat(explodeSound);
-                    explodeSound.setAttribute('src','sound/explode1.' + audioType);
+                    explodeSound.setAttribute('src','/public/sound/explode1.' + audioType);
                     explodeSound.addEventListener('canplaythrough',itemLoaded,false);
 
                     explodeSound2 = document.createElement('audio');
                     document.body.appendChild(explodeSound2);
                     audioType = supportedAudioFormat(explodeSound2);
-                    explodeSound2.setAttribute('src','sound/explode1.' + audioType);
+                    explodeSound2.setAttribute('src','/public/sound/explode1.' + audioType);
                     explodeSound2.addEventListener('canplaythrough',itemLoaded,false);
 
                     explodeSound3 = document.createElement('audio');
                     document.body.appendChild(explodeSound3);
                     audioType = supportedAudioFormat(explodeSound3);
-                    explodeSound3.setAttribute('src','sound/explode1.' + audioType);
+                    explodeSound3.setAttribute('src','/public/sound/explode1.' + audioType);
                     explodeSound3.addEventListener('canplaythrough',itemLoaded,false);
                     
                     
                     explosionSound = document.createElement('audio');
                     document.body.appendChild(explosionSound);
                     audioType = supportedAudioFormat(explosionSound);
-                    explosionSound.setAttribute('src','sound/explosion.' + audioType);
+                    explosionSound.setAttribute('src','/public/sound/explosion.' + audioType);
                     explosionSound.addEventListener('canplaythrough',itemLoaded,false);
 
                     explosionSound2 = document.createElement('audio');
                     document.body.appendChild(explosionSound2);
                     audioType = supportedAudioFormat(explosionSound2);
-                    explosionSound2.setAttribute('src','sound/explosion.' + audioType);
+                    explosionSound2.setAttribute('src','/public/sound/explosion.' + audioType);
                     explosionSound2.addEventListener('canplaythrough',itemLoaded,false);
 
                     explosionSound3 = document.createElement('audio');
                     document.body.appendChild(explosionSound3);
                     audioType = supportedAudioFormat(explosionSound3);
-                    explosionSound3.setAttribute('src','sound/explosion.' + audioType);
+                    explosionSound3.setAttribute('src','/public/sound/explosion.' + audioType);
                     explosionSound3.addEventListener('canplaythrough',itemLoaded,false);
                                       
 
                     shootSound = document.createElement('audio');
                     document.body.appendChild(shootSound);
                     audioType = supportedAudioFormat(shootSound);
-                    shootSound.setAttribute('src','sound/shoot1.' + audioType);
+                    shootSound.setAttribute('src','/public/sound/shoot1.' + audioType);
                     shootSound.addEventListener('canplaythrough',itemLoaded,false);
 
                     shootSound2 = document.createElement('audio');
                     document.body.appendChild(shootSound2);
                     audioType = supportedAudioFormat(shootSound2);
-                    shootSound2.setAttribute('src','sound/shoot1.' + audioType);
+                    shootSound2.setAttribute('src','/public/sound/shoot1.' + audioType);
                     shootSound2.addEventListener('canplaythrough',itemLoaded,false);
 
                     shootSound3 = document.createElement('audio');
                     document.body.appendChild(shootSound3);
                     audioType = supportedAudioFormat(shootSound3);
-                    shootSound3.setAttribute('src','sound/shoot1.' + audioType);
+                    shootSound3.setAttribute('src','/public/sound/shoot1.' + audioType);
                     shootSound3.addEventListener('canplaythrough',itemLoaded,false);
 
                     sonicboomSound = document.createElement('audio');
                     document.body.appendChild(sonicboomSound);
                     audioType = supportedAudioFormat(sonicboomSound);
-                    sonicboomSound.setAttribute('src','sound/sonicboom.' + audioType);
+                    sonicboomSound.setAttribute('src','/public/sound/sonicboom.' + audioType);
                     sonicboomSound.addEventListener('canplaythrough',itemLoaded,false); 
 
              
@@ -185,8 +185,8 @@ window.addEventListener('load', eventWindowLoaded,false);
                     fuelledSound = document.createElement('audio');
                     document.body.appendChild(fuelledSound);
                     audioType = supportedAudioFormat(fuelledSound);
-                    fuelledSound.setAttribute('src','sound/fuelled.' + audioType);
-                    //fuelledSound.setAttribute('src','sound/shoot1.' + audioType);
+                    fuelledSound.setAttribute('src','/public/sound/fuelled.' + audioType);
+                    //fuelledSound.setAttribute('src','/public/sound/shoot1.' + audioType);
                     fuelledSound.addEventListener('canplaythrough',itemLoaded,false); 
 
              
