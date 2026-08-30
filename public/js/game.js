@@ -294,6 +294,11 @@ window.addEventListener('load', eventWindowLoaded,false);
                     const frameInterval = 1000 / TARGET_FPS;
                     let lastFrameTime = performance.now();
 
+                    if (window.jetpacishAudio) {
+                        console.log('[Jetpac Game] Initializing theme audio from game init()...');
+                        window.jetpacishAudio.start();
+                    }
+
                     (function animloop(currentTime){
                         requestAnimFrame(animloop);
                         if (!currentTime) currentTime = performance.now();
@@ -309,6 +314,18 @@ window.addEventListener('load', eventWindowLoaded,false);
                 function initListeners() {
                     document.addEventListener( 'keydown', onKeyDown, false );
                     document.addEventListener( 'keyup', onKeyUp, false );
+
+                    // Unblock browser autoplay on first user interaction on title screen
+                    const startAudioOnInteraction = function(e) {
+                        if (window.jetpacishAudio && game_state === GAME_START && !window.jetpacishAudio.isPlaying) {
+                            console.log(`[Jetpac Game] Interaction event ("${e.type}") received -> triggering theme audio playback`);
+                            window.jetpacishAudio.start();
+                        }
+                    };
+                    document.addEventListener('click', startAudioOnInteraction, false);
+                    document.addEventListener('touchstart', startAudioOnInteraction, false);
+                    document.addEventListener('keydown', startAudioOnInteraction, false);
+
                     // document.addEventListener('setHighScores', function(e){                        
                     //     var n = e.scores.split('|');
                     //     highScores = [];
@@ -326,8 +343,6 @@ window.addEventListener('load', eventWindowLoaded,false);
                         ctx.stroke();
                       }
                 }, false);
-
-
 
                 }
 
@@ -359,17 +374,26 @@ window.addEventListener('load', eventWindowLoaded,false);
                                 playSound(SOUND_SHOOT,0.5)
                             }
                         }else if(game_state == GAME_START){
+                            if(window.jetpacishAudio) {
+                                window.jetpacishAudio.fadeOut(1.0);
+                            }
                             resetGameElements();
                             in_play = IN_PLAY_BUILDING_ROCKET;                                 
                             setUpAliens();                                                
                             game_state = GAME_PLAY;                            
                         }else if(game_state == GAME_END){
                             game_state = GAME_START;
+                            if(window.jetpacishAudio) {
+                                window.jetpacishAudio.start(0.5);
+                            }
                         }
 
                     }else if(e.keyCode == 13){
                         if(game_state == GAME_END){
                             game_state = GAME_START;
+                            if(window.jetpacishAudio) {
+                                window.jetpacishAudio.start(0.5);
+                            }
                         }
                     }
 
