@@ -290,10 +290,18 @@ window.addEventListener('load', eventWindowLoaded,false);
                             ]
                     ]
                     edgeLevels = edges.length;
-                    //gameInterval = setInterval(gameLoop, 1000/60);
-                    (function animloop(){
+                    const TARGET_FPS = 70; // 70 FPS capped loop for snappier retro feel
+                    const frameInterval = 1000 / TARGET_FPS;
+                    let lastFrameTime = performance.now();
+
+                    (function animloop(currentTime){
                         requestAnimFrame(animloop);
-                        gameLoop();
+                        if (!currentTime) currentTime = performance.now();
+                        var elapsed = currentTime - lastFrameTime;
+                        if (elapsed >= frameInterval) {
+                            lastFrameTime = currentTime - (elapsed % frameInterval);
+                            gameLoop();
+                        }
                     })();
 
                 }			
@@ -350,21 +358,17 @@ window.addEventListener('load', eventWindowLoaded,false);
                                 }
                                 playSound(SOUND_SHOOT,0.5)
                             }
-                        }else if(game_state == GAME_START||game_state == HIGH_SCORES){
+                        }else if(game_state == GAME_START){
                             resetGameElements();
                             in_play = IN_PLAY_BUILDING_ROCKET;                                 
                             setUpAliens();                                                
                             game_state = GAME_PLAY;                            
-                        }else if(game_state = GAME_END){
+                        }else if(game_state == GAME_END){
                             game_state = GAME_START;
                         }
 
                     }else if(e.keyCode == 13){
-                        if(game_state == GAME_START){
-                            //go to high scores
-                            // game_state = HIGH_SCORES;
-                            // highScore.getScores();                            
-                        }else if(game_state == HIGH_SCORES){
+                        if(game_state == GAME_END){
                             game_state = GAME_START;
                         }
                     }
@@ -567,6 +571,8 @@ window.addEventListener('load', eventWindowLoaded,false);
                         }
                     }else{                        
                         game_state = GAME_END;
+                        clearInterval(alienInterval);
+                        clearInterval(bonusTimer);
                         //need to release the keys
                         upDown = false; 
                         leftDown = false; 
@@ -690,80 +696,153 @@ window.addEventListener('load', eventWindowLoaded,false);
                     bonus.setEnabled(false);
                 }
 
-                function createTitleScreen(){
-                    var x = canvas.width/2;
-                    ctx.font = '40px Orbitron';
-                    ctx.fillStyle = '#ffffff';                
-                    ctx.fillText('Welcome to Jetpac{ish}',x,220);
-                    ctx.strokeStyle   = "blue";
-                    ctx.strokeText('Welcome to Jetpac{ish}', x,220);
-                    ctx.font = '20px Orbitron';
-                    ctx.fillText('Hit space to play', x,350)
-                    // ctx.fillText('or Return to view high scores', x,380)
-
-                    ctx.font = '15px Orbitron';
-                    ctx.fillText('Use the arrow keys to go left and right and thrust',x,260);
-                    ctx.fillText('Space bar fires bullets',x,290);
+                function drawSpectrumRainbow(y, h){
+                    var colors = ['#ff0000', '#ffff00', '#00ff00', '#00ffff', '#ff00ff'];
+                    var segW = (SCREEN_WIDTH - 60) / colors.length;
+                    for(var i = 0; i < colors.length; i++){
+                        ctx.fillStyle = colors[i];
+                        ctx.fillRect(30 + (i * segW), y, segW, h);
+                    }
                 }
 
+                function createTitleScreen(){
+                    var x = canvas.width/2;
 
-                // function createHighScores(){
-                //     var x = canvas.width/2;
-                //     ctx.font = '40px Orbitron';
-                //     ctx.fillStyle = '#ffffff';
-                //     ctx.fillText('High Scores',x,150);
-                //     ctx.strokeStyle   = "blue";
-                //     ctx.strokeText('High Scores', x,150);
-                //     ctx.font = '20px Orbitron';
-                //     ctx.textAlign = 'left';
-                //     if( highScores.length != 0 ) {
-                //         for(var i = 0; i < highScores.length; i++){
-                //             ctx.fillText(highScores[i].name ,170,185 + (i*25))
-                //             ctx.fillText(highScores[i].score ,350,185 + (i*25))
-                //         }
-                //     }
+                    // Top Spectrum Rainbow
+                    drawSpectrumRainbow(15, 6);
 
-                //     ctx.textAlign = 'center';
-                //     ctx.fillText('Hit space to play', x,430)
-                //     ctx.fillText('or Return to go to the home page', x,460)
-                // }
+                    // Spectrum publisher / header
+                    ctx.font = '10px "Press Start 2P", monospace';
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText('ULTIMATE PLAY THE GAME', x, 42);
 
-                function zeroFix(score){
-                    if(score.length < 10){
-                        var zeros = 10 - score.length,
-                        n="";
-                        for (var i = 0; i<zeros; i++){
-                            n+="0"
-                        }
-                    }
-                    return n+score;
+                    // Title Logo with 3D shadow
+                    ctx.font = '36px "Press Start 2P", monospace';
+                    ctx.fillStyle = '#ff0055';
+                    ctx.fillText('JETPAC', x + 4, 94);
+                    ctx.fillStyle = '#ffff00';
+                    ctx.fillText('JETPAC', x, 90);
+
+                    // Subtitle
+                    ctx.font = '11px "Press Start 2P", monospace';
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText('{ I S H }', x, 120);
+
+                    // Item Showcase Box
+                    ctx.strokeStyle = '#00ffff';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(40, 138, 560, 105);
+                    ctx.fillStyle = 'rgba(10, 10, 40, 0.6)';
+                    ctx.fillRect(40, 138, 560, 105);
+
+                    // Sprites showcase inside box
+                    // 1) Jetman
+                    ctx.drawImage(playerImg, 29, 0, 28, 38, 90, 152, 28, 38);
+                    ctx.fillStyle = '#00ff00';
+                    ctx.font = '9px "Press Start 2P", monospace';
+                    ctx.fillText('JETMAN', 104, 222);
+
+                    // 2) Rocket
+                    ctx.drawImage(spaceshipImg, 0, 64, 32, 32, 220, 155, 32, 32);
+                    ctx.fillStyle = '#ffff00';
+                    ctx.font = '9px "Press Start 2P", monospace';
+                    ctx.fillText('ROCKET', 236, 222);
+
+                    // 3) Fuel
+                    ctx.drawImage(fuelImg, 0, 0, 32, 20, 350, 161, 32, 20);
+                    ctx.fillStyle = '#ff00ff';
+                    ctx.font = '9px "Press Start 2P", monospace';
+                    ctx.fillText('FUEL', 366, 222);
+
+                    // 4) Alien
+                    ctx.drawImage(alienImg, 34, 0, 33, 30, 475, 156, 33, 30);
+                    ctx.fillStyle = '#ff3333';
+                    ctx.font = '9px "Press Start 2P", monospace';
+                    ctx.fillText('ALIEN', 491, 222);
+
+                    // Controls Guide Box
+                    ctx.strokeStyle = '#ff00ff';
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeRect(60, 258, 520, 95);
+                    ctx.fillStyle = 'rgba(10, 10, 40, 0.6)';
+                    ctx.fillRect(60, 258, 520, 95);
+
+                    ctx.font = '10px "Press Start 2P", monospace';
+                    ctx.fillStyle = '#ffff00';
+                    ctx.fillText('MISSION CONTROLS', x, 278);
+
+                    ctx.font = '9px "Press Start 2P", monospace';
+                    ctx.textAlign = 'left';
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillText('◄ LEFT  /  ► RIGHT', 85, 302);
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(': WALK & FLY', 315, 302);
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillText('▲ UP ARROW', 85, 322);
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(': THRUST JETPAC', 315, 322);
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillText('SPACE BAR', 85, 342);
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(': FIRE LASERS', 315, 342);
+
+                    // Pulsing / Flashing Start Prompt
+                    ctx.textAlign = 'center';
+                    var flashColors = ['#ffff00', '#ffffff', '#00ffff', '#00ff00'];
+                    var flashIdx = Math.floor(Date.now() / 250) % flashColors.length;
+                    ctx.fillStyle = flashColors[flashIdx];
+                    ctx.font = '13px "Press Start 2P", monospace';
+                    ctx.fillText('► HIT SPACE TO PLAY ◄', x, 395);
+
+                    // Footer / Copyright
+                    ctx.font = '8px "Press Start 2P", monospace';
+                    ctx.fillStyle = '#5588ff';
+                    ctx.fillText('© 1983 A.C.G. / ASHBY COMPUTERS & GRAPHICS', x, 445);
+                    drawSpectrumRainbow(458, 4);
                 }
 
                 function createEndScreen(){
-
                     var x = canvas.width/2;
-                    if (score == 0){
-                        // highScore.getScores();
-                        game_state = HIGH_SCORES;
-                    }else{
-                        if(showingCongratsPrompt == false){
-                            var fName = prompt("Congratulations you scored " + score +". Enter your name : ", "");
-                            showingCongratsPrompt = true;
 
-                            if(fName!=null){
-                                // highScore.sendScore(fName,score);
-                                // setTimeout(function(){
-                                //     highScore.getScores();
-                                //     game_state = HIGH_SCORES;
-                                // },1000)
-                            }else{
-                                // highScore.getScores();
-                                game_state = HIGH_SCORES;
-                            }
-                               
-                        }
-                    }
-                    
+                    // Rainbow stripe
+                    drawSpectrumRainbow(15, 6);
+
+                    // Game Over Header
+                    ctx.font = '32px "Press Start 2P", monospace';
+                    ctx.fillStyle = '#ff0000';
+                    ctx.fillText('GAME OVER', x + 3, 83);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillText('GAME OVER', x, 80);
+
+                    // Score Box
+                    ctx.strokeStyle = '#00ffff';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(90, 120, 460, 140);
+                    ctx.fillStyle = 'rgba(10, 10, 40, 0.6)';
+                    ctx.fillRect(90, 120, 460, 140);
+
+                    ctx.font = '12px "Press Start 2P", monospace';
+                    ctx.fillStyle = '#ffff00';
+                    ctx.fillText('PLAYER 1 FINAL SCORE', x, 165);
+
+                    ctx.font = '22px "Press Start 2P", monospace';
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(scoreText || zeroPad(score || 0, 8), x, 215);
+
+                    // Flashing return prompt
+                    var flashColors = ['#ffff00', '#ffffff', '#00ffff', '#00ff00'];
+                    var flashIdx = Math.floor(Date.now() / 250) % flashColors.length;
+                    ctx.fillStyle = flashColors[flashIdx];
+                    ctx.font = '12px "Press Start 2P", monospace';
+                    ctx.fillText('► HIT SPACE FOR MAIN MENU ◄', x, 325);
+
+                    // Footer
+                    ctx.font = '8px "Press Start 2P", monospace';
+                    ctx.fillStyle = '#5588ff';
+                    ctx.fillText('© 1983 A.C.G. / ASHBY COMPUTERS & GRAPHICS', x, 445);
+                    drawSpectrumRainbow(458, 4);
                 }
 
                 function inGameLoop(){
@@ -1016,9 +1095,11 @@ window.addEventListener('load', eventWindowLoaded,false);
 
                 //@TODOneed to put this into a class 
                 function showScore(){
-                    ctx.font = '20px Orbitron';
-                    ctx.fillStyle = '#ffffff';                
-                    ctx.fillText('Score: ' + scoreText,10,40);
+                    ctx.font = '11px "Press Start 2P", monospace';
+                    ctx.fillStyle = '#ffff00';
+                    ctx.fillText('1UP', 15, 28);
+                    ctx.fillStyle = '#00ffff';
+                    ctx.fillText(scoreText || zeroPad(score || 0, 8), 65, 28);
                 }
 
                 function setScoreText(){

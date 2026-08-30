@@ -9,28 +9,39 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>JetPac</title>
-		<link href='//fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
 		<style type="text/css">
 			body {
-        /* background-image: url(images/space.jpg); */
-				background-color: black;
+				background-color: #0b0b12;
 				margin: 0px;
 				overflow: hidden;
-				text-align:center;
+				text-align: center;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				min-height: 100vh;
+			}
+			canvas {
+				image-rendering: pixelated;
+				image-rendering: crisp-edges;
+				box-shadow: 0 0 30px rgba(0, 255, 255, 0.25), 0 0 10px rgba(255, 255, 0, 0.2);
+				border: 3px solid #222244;
 			}
 		</style>
 
-    <script src="/public/js/Vector2.js"></script>
-		<script src="/public/js/Edge.js"></script>	
-		<script src="/public/js/Player.js"></script>
-    <script src="/public/js/Alien.js"></script>
-		<script src="/public/js/Bonus.js"></script>
-    <script src="/public/js/Bullet.js"></script>
-    <script src="/public/js/Particle.js"></script>
-    <script src="/public/js/Spaceship.js"></script>
-    <script src="/public/js/Explosion.js"></script>
-    <script src="/public/js/Fuel.js"></script>
-		<script src="/public/js/game.js"></script>	
+    <script src="/public/js/Vector2.js?v=4"></script>
+		<script src="/public/js/Edge.js?v=4"></script>	
+		<script src="/public/js/Player.js?v=4"></script>
+    <script src="/public/js/Alien.js?v=4"></script>
+		<script src="/public/js/Bonus.js?v=4"></script>
+    <script src="/public/js/Bullet.js?v=4"></script>
+    <script src="/public/js/Particle.js?v=4"></script>
+    <script src="/public/js/Spaceship.js?v=4"></script>
+    <script src="/public/js/Explosion.js?v=4"></script>
+    <script src="/public/js/Fuel.js?v=4"></script>
+		<script src="/public/js/game.js?v=4"></script>	
 		<!-- <script src="js/Highscore.js"></script> -->
   </head>
   <body>

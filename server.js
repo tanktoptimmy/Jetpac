@@ -8,7 +8,8 @@ app.use(compression());
 app.disable("x-powered-by");
 app.set("port", process.env.PORT  || 8082);
 
-app.use(express.static('public'))
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
